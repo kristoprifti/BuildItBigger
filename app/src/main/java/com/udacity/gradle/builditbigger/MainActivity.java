@@ -1,28 +1,21 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.JokeLibrary;
 
-import me.kristoprifti.android.jokevieweractivity.JokeViewerActivity;
-
 
 public class MainActivity extends AppCompatActivity {
-
-    private JokeLibrary jokeLibrary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        jokeLibrary = new JokeLibrary();
+        JokeLibrary jokeLibrary = new JokeLibrary();
     }
 
 
@@ -49,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        // Getting a random joke from jokelib
-        String joke = jokeLibrary.getRandomJoke();
-        // Starting JokeDisplayActivity passing the random joke as intent
-        Intent intent = new Intent(this, JokeViewerActivity.class);
-        intent.setData(Uri.parse(joke));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        new EndpointsAsyncTask(this).execute();
     }
 }
