@@ -5,9 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.example.JokeLibrary;
-
+import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,9 +13,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        JokeLibrary jokeLibrary = new JokeLibrary();
+        getSupportFragmentManager().beginTransaction().
+                add(R.id.fragment,new MainActivityFragment()).commit();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("unchecked")
     public void tellJoke(View view) {
-        new EndpointsAsyncTask(this).execute();
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        new EndpointsAsyncTask(this, progressBar).execute();
     }
 }
